@@ -12,11 +12,10 @@ val mainModule = module {
 
 
     single {
-        val mongoPW=System.getenv("MONGO_PW")
         val dbName="Chat_db"
         KMongo
             .createClient(
-                connectionString = "mongodb+srv://VighneshPandey:$mongoPW@cluster0.cxgaquy.mongodb.net/$dbName?retryWrites=true&w=majority"
+                connectionString = System.getenv("CONNECTION_STRING_DB")
             )
             .coroutine
             .getDatabase(dbName)
