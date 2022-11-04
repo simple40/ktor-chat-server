@@ -12,10 +12,11 @@ val mainModule = module {
 
 
     single {
+        val connectionString = System.getenv("CONNECTION_STRING_DB")
         val dbName="Chat_db"
         KMongo
             .createClient(
-                connectionString = System.getenv("CONNECTION_STRING_DB")
+                connectionString = connectionString
             )
             .coroutine
             .getDatabase(dbName)
