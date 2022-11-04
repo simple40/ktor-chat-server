@@ -1,0 +1,1 @@
+rootProject.name = "com.vighn.ktor-chat-server"
