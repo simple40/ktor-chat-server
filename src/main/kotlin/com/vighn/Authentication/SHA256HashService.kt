@@ -1,11 +1,11 @@
 package com.vighn.Authentication
 
 import com.vighn.Authentication.Model.SaltedHash
-import kotlinx.coroutines.handleCoroutineException
+
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
 import java.security.SecureRandom
-import java.util.HexFormat
+
 
 class SHA256HashService : HashService {
     override fun generateSaltedHash(value: String, saltLength: Int): SaltedHash {

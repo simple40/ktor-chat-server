@@ -1,0 +1,1 @@
+web: ./build/install/com.vighn.ktor-chat-server/bin/com.vighn.ktor-chat-server
