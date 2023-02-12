@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.jvm.tasks.Jar
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -54,4 +57,31 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
 
     implementation("commons-codec:commons-codec:1.15")
+    implementation(kotlin("stdlib-jdk8"))
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+
+
+val fatJar = task("fatJar", type = org.gradle.jvm.tasks.Jar::class) {
+    baseName = "${project.name}"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Implementation-Title"] = "Gradle Jar File Example"
+        attributes["Implementation-Version"] = version
+        attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
+    }
+    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
+    with(tasks.jar.get() as CopySpec)
+}
+tasks {
+    "build" {
+        dependsOn(fatJar)
+    }
 }
